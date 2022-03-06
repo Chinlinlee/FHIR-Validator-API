@@ -9,6 +9,8 @@ using Hl7.Fhir.Validation;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace FHIRValidatorAPI.Controllers
 {
@@ -16,6 +18,13 @@ namespace FHIRValidatorAPI.Controllers
     [ApiController]
     public class ValidateController : ControllerBase
     {
+        private readonly ILogger _logger;
+        private readonly Validator _validator;
+        public ValidateController(ILogger<ValidateController> logger) 
+        {
+            _logger = logger;
+            _validator = new Validator(MyValidateSetting.validationSettings);
+        }
         [HttpPost]
         public ValidateResult Post([FromBody]ValidateInput value) 
         {
@@ -24,9 +33,8 @@ namespace FHIRValidatorAPI.Controllers
             validateResult.data = "";
             try
             {
-                var validator = new Validator(MyValidateSetting.validationSettings);
                 var jsonReader = (new FhirJsonParser()).Parse<Resource>(value.resourceJson);
-                var validation = validator.Validate(jsonReader, value.profile);
+                var validation = this._validator.Validate(jsonReader, value.profile);
                 validateResult.status = true;
                 validateResult.data = validation.ToJson();
             }
