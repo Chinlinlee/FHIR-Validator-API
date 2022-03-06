@@ -13,14 +13,89 @@
 
 ### API
 - /api/validate
-    - Body : FHIR Resource
-    - Response
-        - status : boolean
-        - data: OperationOutcome message | errorMessage
 > 用於驗證FHIR Resource 
+<table>
+<tr>
+    <td>Name</td>
+    <td>Value</td>
+    <td>Description</td>
+</tr>
+<tr>
+<td>method</td>
+<td>POST</td>
+<td>The HTTP method</td>
+</tr>
+<tr>
+<td>
+    request body
+</td>
+<td>
+
+```json
+{
+    "profile": [
+        "profile-array-string"
+    ],
+    "resourceJson": "FHIR resource JSON string"
+}
+```
+
+</td>
+<td>
+    The request body use JSON
+</td>
+</tr>
+<tr>
+    <td>
+        response
+    </td>
+<td>
+
+```json
+{
+    "status": true,
+    "data": "OperationOutcome || error message"
+}
+```
+
+</td>
+<td>status: false when server throw error</td>
+    </tr>
+</table>
 
 - /api/refreshresourceresolver
-    - Response
-        - status : boolean
-        - data: "success" | errorMessage
 > 用於重新載入`assets/validationResources`中的profile，當你有新的profile json檔案時，請使用此API更新。
+
+<table>
+<tr>
+    <td>Name</td>
+    <td>Value</td>
+    <td>Description</td>
+</tr>
+<tr>
+<td>method</td>
+<td>POST</td>
+<td>The HTTP method</td>
+</tr>
+<tr>
+<td>request body</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr>
+<td>response</td>
+<td>
+
+```json
+{
+    "status": true,
+    "data": "\"success\" || errorMessage"
+}
+```
+
+</td>
+<td>status: false when server throw error. <br />
+data: "success" or errorMessage
+</td>
+</tr>
+</table>
