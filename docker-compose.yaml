@@ -1,8 +1,8 @@
 version: "3"
 services:
-  firely-validator:
-    build: ./firely-validator
-    container_name: firely-validator
+  burni-firely-validator:
+    build: ./
+    container_name: burni-firely-validator
     ports:
       - "7414:7414"
     networks:
