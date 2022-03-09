@@ -1,8 +1,9 @@
 version: "3"
 services:
-  burni-firely-validator:
+  fhir-validator-api:
     build: ./
-    container_name: burni-firely-validator
+    image: fhir-validator-api
+    container_name: fhir-validator-api
     ports:
       - "7414:7414"
     networks:
